@@ -182,4 +182,71 @@ nginx [-?hvVtq] [-s signal] [-c filename] [-p prefix] [-g directives]
   按后端服务器的响应时间来分配请求，响应时间短的优先分配。
   ~~~
 
+## 7、动静分离Demo
+
+`Nginx 动静分离简单来说就是把动态跟静态请求分开，不能理解成只是单纯的把动态页面和静态页面物理分离。严格意义上说应该是动态请求跟静态请求分开，可以理解成使用Nginx 处理静态页面，Tomcat处理动态页面`
+
+一种是纯粹把静态文件独立成单独的域名，放在独立的服务器上，也是目前**主流推崇**的方案；
+
+ 另外一种方法就是动态跟静态文件混合在一起发布，通过 nginx 来分开。 通过 location 指定不同的后缀名实现不同的请求转发
+
+* 服务器上新增静态资源文件夹
+
+* 配置nginx.conf
+
   
+
+  ~~~properties
+       
+          location /www/ {
+             root  /home/chenyn/data/;
+          }
+  
+          location /image/ {
+             root  /home/chenyn/data/;
+             ## 显示文件目录
+             autoindex  on;
+          }
+  
+  ~~~
+
+  
+
+* root 详解
+
+  ```
+  location ^~ /t/ {
+       root /www/root/html/;
+  }
+  ```
+
+  如果一个请求的URI是/t/a.html时，web服务器将会返回服务器上的/www/root/html/t/a.html的文件。
+
+## 8、nginx 配置高可用的集群
+
+待新增
+
+## 9 、nginx原理
+
+![运行原理](nginx.jpg)
+
+![工作原理](nginx2.jpg)
+
+~~~properties
+master-workers 的机制的好处
+首先，对于每个
+worker 进程来说，独立的进程，不需要加锁，所以省掉了锁带来的开销，
+同时在编程以及问题查找时，也会方便很多。其次，采用独立的进程，可以让互相之间不会
+影响，一个进程退出后，其它进程还在工作，服务不会中断， master 进程则很快启动新的
+worker 进程。当然， worker 进程的异常退出，肯定是程序有 bug 了，异常退出，会导致当
+前 worker 上的所有请求失败，不过不会影响到所有请求，所以降低了风险。
+
+需要设置多少个
+worker
+Nginx
+同 redis 类似都采用了 io 多路复用机制，每个 worker 都是一个独立的进程，但每个进
+程里只有一个主线程，通过异步非阻塞的方式来处理请求， 即使是千上万个请求也不在话
+下。每个 worker 的线程可以把一个 cpu 的性能发挥到极致。所以 worker 数和服务器的 cpu
+数相等是最为适宜的。设少了会浪费 cpu ，设多了会造成 cpu 频繁切换上下文带来的损耗。
+~~~
+
