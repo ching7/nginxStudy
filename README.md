@@ -2,7 +2,7 @@
 
 ---
 
-## 1、nginx安装（linux）
+## nginx安装（linux）
 
 * 安装nginx环境依赖
   * 配置yum源
@@ -14,7 +14,7 @@
 
 * 启动nginx，进入目录 `/usr/local/nginx/sbin`中，`./nginx`启动nginx
 
-## 2、测试访问nginx
+## 测试访问nginx
 
 * linux开启80端口访问权限
 
@@ -28,7 +28,7 @@
 
 * 远程访问，ip:80端口，显示："Welcome to nginx!"。安装成功
 
-## 3、ngnix常用命令
+## ngnix常用命令
 
 * 进入目录`/usr/local/nginx/sbin`
 
@@ -50,7 +50,7 @@ nginx [-?hvVtq] [-s signal] [-c filename] [-p prefix] [-g directives]
 -g directives   : 设置配置文件外的全局指令
 ~~~
 
-## 4、nginx配置文件
+## nginx配置文件
 
 * 配置文件目录`/usr/local/nginx/conf`下的nginx.conf
 
@@ -81,13 +81,27 @@ nginx [-?hvVtq] [-s signal] [-c filename] [-p prefix] [-g directives]
     }
     ~~~
     
-    
-    
     还包含两部分：
     http 全局块
     server 块
 
-## 5、反向代理Demo
+## 反向代理Demo
+
+**代理**：
+
+在Java设计模式中，代理模式是这样定义的：给某个对象提供一个代理对象，并由代理对象控制原对象的引用。
+
+　　在举一个现实生活中的例子：比如我们要买一间二手房，虽然我们可以自己去找房源，但是这太花费时间精力了，而且房屋质量检测以及房屋过户等一系列手续也都得我们去办，再说现在这个社会，等我们找到房源，说不定房子都已经涨价了，那么怎么办呢？最简单快捷的方法就是找二手房中介公司（为什么？别人那里房源多啊），于是我们就委托中介公司来给我找合适的房子，以及后续的质量检测过户等操作，我们只需要选好自己想要的房子，然后交钱就行了。
+
+　　代理简单来说，就是如果我们想做什么，但又不想直接去做，那么这时候就找另外一个人帮我们去做。那么这个例子里面的中介公司就是给我们做代理服务的，我们委托中介公司帮我们找房子。
+
+**正向代理代理客户端，反向代理代理服务器：**
+
+即**正向代理时在客户端运行，反向代理时在服务器上运行**
+
+　　反向代理，其实客户端对代理是无感知的，因为客户端不需要任何配置就可以访问，我们只需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，在返回给客户端，此时反向代理服务器和目标服务器对外就是一个服务器，暴露的是代理服务器地址，隐藏了真实服务器IP地址。
+
+![代理](document/images/proxy.jpg)
 
 预期效果：打开浏览器，在浏览器地址栏输入地址 www.chenyn.com ，跳转到 liunx 系统 tomcat 主页
 面中
@@ -140,7 +154,7 @@ nginx [-?hvVtq] [-s signal] [-c filename] [-p prefix] [-g directives]
 
   会页面会跳转到8080 和8081 服务器
 
-## 6、负载均衡Demo
+## 负载均衡Demo
 
 预期效果：浏览器地址栏输入地址 http://192.168.17.129:9001/edu/test.html ，负载均衡效果，平均 8080 和 8081 端口中
 
@@ -182,7 +196,7 @@ nginx [-?hvVtq] [-s signal] [-c filename] [-p prefix] [-g directives]
   按后端服务器的响应时间来分配请求，响应时间短的优先分配。
   ~~~
 
-## 7、动静分离Demo
+## 动静分离Demo
 
 `Nginx 动静分离简单来说就是把动态跟静态请求分开，不能理解成只是单纯的把动态页面和静态页面物理分离。严格意义上说应该是动态请求跟静态请求分开，可以理解成使用Nginx 处理静态页面，Tomcat处理动态页面`
 
@@ -222,15 +236,15 @@ nginx [-?hvVtq] [-s signal] [-c filename] [-p prefix] [-g directives]
 
   如果一个请求的URI是/t/a.html时，web服务器将会返回服务器上的/www/root/html/t/a.html的文件。
 
-## 8、nginx 配置高可用的集群
+## nginx 配置高可用的集群
 
 待新增
 
-## 9 、nginx原理
+## nginx原理
 
-![运行原理](nginx.jpg)
+![运行原理](document/images/nginx.jpg)
 
-![工作原理](nginx2.jpg)
+![工作原理](document/images/nginx2.jpg)
 
 ~~~properties
 master-workers 的机制的好处
